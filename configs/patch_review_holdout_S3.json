@@ -1,0 +1,81 @@
+{
+ "schema": "caso.patch_review/0.1",
+ "date": "2026-11-10",
+ "scope": "Semantic audit of confirmed held-out patches: AI-assisted code inspection, checked with differential tests (analysis/differential_audit.py).",
+ "rule": "reject = the patch changes the k-means++ seeding algorithm (weights not proportional to squared distance to the nearest chosen centroid); extension: reject = the patch returns wrong results or raises on valid inputs that the original handles (e.g. a cross-call cache not keyed by all inputs)",
+ "variant": "S3_semantic_extended",
+ "reviews": [
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "running distance updated with np.maximum (farthest centroid) instead of np.minimum (nearest)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "distances to the first k data points instead of the chosen centroids, never updated"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s2",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s5",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s5",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "single-entry instance cache compared with tuple != on the shape parameters: raises ValueError when they are arrays with more than one element (vectorised pdf calls)"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s0",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "instance dict cache keyed by a tuple of the shape parameters: raises TypeError (unhashable ndarray) on the pdf path, where they are arrays"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "instance dict cache keyed by a tuple of the shape parameters: raises TypeError (unhashable ndarray) on the pdf path, where they are arrays"
+  }
+ ]
+}

@@ -1,0 +1,119 @@
+[
+ {
+  "schema_version": "caso.cost_scenario/0.1",
+  "scenario_id": "pilot-fullyloaded-gpu-low",
+  "data_kind": "estimated",
+  "cost_mode": "fully_loaded",
+  "currency": "EUR",
+  "price_year": 2026,
+  "price_basis": "nominal",
+  "horizon_years": 3,
+  "discount_rate": {
+   "value": null,
+   "unit": "fraction/year",
+   "kind": "missing",
+   "missing_reason": "not preregistered; pilot reports r=0 and r=0.05 as sensitivity"
+  },
+  "demand": {
+   "scenario_label": "other",
+   "annual_executions": {
+    "value": null,
+    "unit": "executions/year",
+    "kind": "missing",
+    "missing_reason": "swept on a log grid in the pilot analysis"
+   }
+  },
+  "rates": {
+   "gpu_hour_fully_loaded_eur": {
+    "value": 1.5992,
+    "unit": "EUR/GPU-h",
+    "kind": "estimated",
+    "source": "Cudo Compute on-demand H100 SXM $1.79/GPU-h (captured 2026-10-06, via web search); converted with ECB 2026-10-23 1.1193 USD/EUR; market price, not the institutional tariff (B4)"
+   },
+   "cpu_core_hour_fully_loaded_eur": {
+    "value": 0.04277,
+    "unit": "EUR/vCPU-h",
+    "kind": "estimated",
+    "source": "AWS c7i.xlarge eu-west-1 on-demand $0.1915/h per 4 vCPU (DoiT compute.doit.com, accessed 2026-10-25) / ECB 2026-10-23 1.1193 USD/EUR; per vCPU-hour"
+   }
+  }
+ },
+ {
+  "schema_version": "caso.cost_scenario/0.1",
+  "scenario_id": "pilot-fullyloaded-gpu-median",
+  "data_kind": "estimated",
+  "cost_mode": "fully_loaded",
+  "currency": "EUR",
+  "price_year": 2026,
+  "price_basis": "nominal",
+  "horizon_years": 3,
+  "discount_rate": {
+   "value": null,
+   "unit": "fraction/year",
+   "kind": "missing",
+   "missing_reason": "not preregistered; pilot reports r=0 and r=0.05 as sensitivity"
+  },
+  "demand": {
+   "scenario_label": "other",
+   "annual_executions": {
+    "value": null,
+    "unit": "executions/year",
+    "kind": "missing",
+    "missing_reason": "swept on a log grid in the pilot analysis"
+   }
+  },
+  "rates": {
+   "gpu_hour_fully_loaded_eur": {
+    "value": 3.7523,
+    "unit": "EUR/GPU-h",
+    "kind": "estimated",
+    "source": "Uvik GPU Price Index median of 16 providers $4.20/GPU-h (2026-10-07); converted with ECB 2026-10-23 1.1193 USD/EUR; market price, not the institutional tariff (B4)"
+   },
+   "cpu_core_hour_fully_loaded_eur": {
+    "value": 0.04277,
+    "unit": "EUR/vCPU-h",
+    "kind": "estimated",
+    "source": "AWS c7i.xlarge eu-west-1 on-demand $0.1915/h per 4 vCPU (DoiT compute.doit.com, accessed 2026-10-25) / ECB 2026-10-23 1.1193 USD/EUR; per vCPU-hour"
+   }
+  }
+ },
+ {
+  "schema_version": "caso.cost_scenario/0.1",
+  "scenario_id": "pilot-fullyloaded-gpu-high",
+  "data_kind": "estimated",
+  "cost_mode": "fully_loaded",
+  "currency": "EUR",
+  "price_year": 2026,
+  "price_basis": "nominal",
+  "horizon_years": 3,
+  "discount_rate": {
+   "value": null,
+   "unit": "fraction/year",
+   "kind": "missing",
+   "missing_reason": "not preregistered; pilot reports r=0 and r=0.05 as sensitivity"
+  },
+  "demand": {
+   "scenario_label": "other",
+   "annual_executions": {
+    "value": null,
+    "unit": "executions/year",
+    "kind": "missing",
+    "missing_reason": "swept on a log grid in the pilot analysis"
+   }
+  },
+  "rates": {
+   "gpu_hour_fully_loaded_eur": {
+    "value": 10.9801,
+    "unit": "EUR/GPU-h",
+    "kind": "estimated",
+    "source": "Azure H100 $12.29/GPU-h as reported in the Uvik GPU Price Index (2026-10-07); converted with ECB 2026-10-23 1.1193 USD/EUR; market price, not the institutional tariff (B4)"
+   },
+   "cpu_core_hour_fully_loaded_eur": {
+    "value": 0.04277,
+    "unit": "EUR/vCPU-h",
+    "kind": "estimated",
+    "source": "AWS c7i.xlarge eu-west-1 on-demand $0.1915/h per 4 vCPU (DoiT compute.doit.com, accessed 2026-10-25) / ECB 2026-10-23 1.1193 USD/EUR; per vCPU-hour"
+   }
+  }
+ }
+]

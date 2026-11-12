@@ -1,0 +1,147 @@
+{
+ "schema": "caso.patch_review/0.1",
+ "date": "2026-11-10",
+ "scope": "Semantic audit of confirmed held-out patches: AI-assisted code inspection, checked with differential tests (analysis/differential_audit.py).",
+ "rule": "reject = the patch changes the k-means++ seeding algorithm (weights not proportional to squared distance to the nearest chosen centroid); strict tier also rejects patches whose output distribution or RNG stream differs from the original for a fixed seed; extension: also rejects patches that change numerical behaviour or raise on edge-case inputs",
+ "variant": "S4_strict_behaviour_extended",
+ "reviews": [
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "running distance updated with np.maximum (farthest centroid) instead of np.minimum (nearest)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "distances to the first k data points instead of the chosen centroids, never updated"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s1",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid drawn from all points (randint(n)) instead of the original randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s3",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s4",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s0",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s3",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s4",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) and np.random.choice (different RNG consumption)"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s2",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss20b:s5",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "normalising constant cached on the distribution instance without the shape parameters: later calls with other (a, b, c, z) silently reuse it"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s5",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "single-entry instance cache compared with tuple != on the shape parameters: raises ValueError when they are arrays with more than one element (vectorised pdf calls)"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s0",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "instance dict cache keyed by a tuple of the shape parameters: raises TypeError (unhashable ndarray) on the pdf path, where they are arrays"
+  },
+  {
+   "candidate_id": "scipy__scipy-18799:h0:gptoss120b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "instance dict cache keyed by a tuple of the shape parameters: raises TypeError (unhashable ndarray) on the pdf path, where they are arrays"
+  },
+  {
+   "candidate_id": "scipy__scipy-10921:h0:qwen32b:s1",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "np.fromiter rejects object dtype in the NumPy of the test bed, and cumsum of an empty row-length list cannot be cast into the integer indptr: raises for object-dtype or zero-row lil matrices"
+  },
+  {
+   "candidate_id": "scipy__scipy-10921:h0:qwen32b:s2",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "np.fromiter rejects object dtype in the NumPy of the test bed: raises for object-dtype lil matrices"
+  },
+  {
+   "candidate_id": "scikit-learn__scikit-learn-19606:h0:gptoss20b:s1",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "drops _safe_accumulator_op, so float16/float32 inputs are accumulated in their own precision instead of float64"
+  },
+  {
+   "candidate_id": "sympy__sympy-10919:h0:gptoss120b:s1",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "computes floor(h*one/j)*k instead of floor(h*k*one/j): changes the low-order bits of the fixed-point inner sum (absorbed by npartitions' guard bits in practice)"
+  },
+  {
+   "candidate_id": "sympy__sympy-10919:h0:gptoss20b:s5",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "computes floor(h*one/j)*k instead of floor(h*k*one/j): changes the low-order bits of the fixed-point inner sum (absorbed by npartitions' guard bits in practice)"
+  }
+ ]
+}

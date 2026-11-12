@@ -1,0 +1,69 @@
+{
+ "schema": "caso.patch_review/0.1",
+ "date": "2026-11-09",
+ "scope": "Semantic audit of confirmed held-out patches: AI-assisted code inspection, checked with differential tests (analysis/differential_audit.py).",
+ "rule": "reject = the patch changes the k-means++ seeding algorithm (weights not proportional to squared distance to the nearest chosen centroid); strict tier also rejects patches whose output distribution or RNG stream differs from the original for a fixed seed",
+ "variant": "S2_strict_behaviour",
+ "reviews": [
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen32b:s3",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "weights proportional to the Euclidean distance (np.linalg.norm), not its square"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s1",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "running distance updated with np.maximum (farthest centroid) instead of np.minimum (nearest)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:qwen7b:s4",
+   "verdict": "reject",
+   "category": "semantic_change",
+   "rationale": "distances to the first k data points instead of the chosen centroids, never updated"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s1",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid drawn from all points (randint(n)) instead of the original randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s3",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss20b:s4",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct D^2 weighting; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s0",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s3",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) instead of randint(dims)"
+  },
+  {
+   "candidate_id": "scipy__scipy-11982:h0:gptoss120b:s4",
+   "verdict": "reject",
+   "category": "behaviour_change",
+   "rationale": "correct incremental D^2 update; first centroid randint(n) and np.random.choice (different RNG consumption)"
+  }
+ ]
+}
